@@ -1,0 +1,113 @@
+import { useState } from "react";
+import axios from '../utils/axios'
+import { useMessage } from "../context/message";
+import { useNavigate } from "react-router";
+
+
+
+
+
+const ProductCreate = () => {
+
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState(Number);
+    const [category, setCategory] = useState('');
+    const [discount, setDiscount] = useState(Number);
+    const [bgcolor, setBgcolor] = useState('');
+    const [panelcolor, setPanelcolor] = useState('');
+    const [textcolor, setTextcolor] = useState('');
+    const [image, setImage] = useState(null);
+
+    const [loading,setLoading]=useState(false);
+    const navigate=useNavigate()
+
+
+    const { topUp } = useMessage();
+
+
+
+    const handleSubmit = async (e) => {
+        if(loading) return;
+        setLoading(true);
+        try {
+            e.preventDefault();
+
+
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("price", price);
+            formData.append("category", category);
+            formData.append("discount", discount);
+            formData.append("bgcolor", bgcolor);
+            formData.append("panelcolor", panelcolor);
+            formData.append("textcolor", textcolor);
+            formData.append("image", image);
+
+            const res = await axios.post('/product/create',  formData, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
+
+            topUp(res.data.message, "success");
+            navigate('/');
+
+
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                topUp(error.response.data.message, "error");
+            } else {
+                topUp(error.message, "error");
+            }
+
+        }finally{
+            setLoading(false);
+        }
+    }
+
+    return (
+        <>
+            <div className="min-h-screen  bg-[url('/public/bgimage.png')] bg-cover bg-center  "  >
+                <div className="relative top-25 ">
+                    <h1 className="text-center text-2xl font-medium ">Post Your Product</h1>
+                    <div className="flex  mx-auto w-[60%]    p-4 ">
+                        <form onSubmit={handleSubmit} className="flex gap-12 flex-wrap">
+                            <input type="text" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
+
+                            <input type="Number" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="price" value={price} onChange={(e) => setPrice(e.target.value)} />
+
+                            <input type="Number" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Discount" value={discount} onChange={(e) => setDiscount(e.target.value)} />
+
+                            <input type="file" className=" w-72 h-42 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required name="image" onChange={(e) => setImage(e.target.files[0])} />
+
+                            <select name="category" className="w-72 h-42 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl" required value={category} onChange={(e) => setCategory(e.target.value)}>
+                                < option  value="">Select category</ option >
+                                < option  value="electronics">Electronics</ option >
+                                < option  value="clothes">Clothing</ option >
+                                < option  value="furniture">Furniture</ option >
+                                < option  value="accessories">Accessories</ option >
+                                < option  value="home">Home</ option >
+                            </select>
+
+                            <div className="flex flex-col gap-8 justify-center items-center ">
+                                <h1 className="text-2xl  ">Color Pallete</h1>
+                                <input type="text" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Bg-color" value={bgcolor} onChange={(e) => setBgcolor(e.target.value)} />
+
+                                <input type="text" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="text-color" value={textcolor} onChange={(e) => setTextcolor(e.target.value)} />
+
+                                <input type="text" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Panel-color" value={panelcolor} onChange={(e) => setPanelcolor(e.target.value)} />
+
+                                <button disabled={loading} type="submit" className="p-4 w-92 rounded-xl bg-orange-500 text-white font-semibold text-xl hover:bg-orange-400 ">{loading?"posting...":"Post"}</button>
+                            </div>
+
+
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </>
+    )
+}
+
+
+export default ProductCreate;
