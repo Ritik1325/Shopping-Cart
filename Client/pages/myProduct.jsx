@@ -67,17 +67,17 @@ const MyProduct = () => {
     return (
         <>
             <button onClick={() => navigate(-1)} className="px-6 py-3 m-4 rounded-xl text-white text-xl font-medium bg-orange-400">Back</button>
-            <div className="h-screen p-4">
+            <div className="h-screen p-2 sm:p-4  flex flex-col gap-16">
                 {products.length > 0 ? (
                     products.map(item => (
-                        <div key={item._id} className="flex p-3 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
-                            <img className="w-32 rounded-xl " src={item.image.url} alt="image" />
-                            <p className=" text-xl text-medium">{item.name}</p>
-                            <p className=" text-xl text-medium">${item.price}</p>
+                        <div key={item._id} className="flex sm:p-3 py-2 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
+                            <img className="sm:w-32 w-12 sm:rounded-xl " src={item.image.url} alt="image" />
+                            <p className=" sm:text-xl text-medium tracking-tighter">{item.name}</p>
+                            <p className=" sm:text-xl text-medium tracking-tighter">${item.price}</p>
                             {item.discount !== 0 ? <div>{item.discount}</div> : null}
 
-                            <button className="bg-red-400 text-white text-xl font-medium rounded-xl p-4" onClick={() => handleDel(item._id)} >Delete</button>
-                            <button className="bg-green-400 text-white text-xl font-medium rounded-xl p-4" onClick={() => navigate(`/update/${item._id}`)}>Update</button>
+                            <button className="bg-red-400 text-white text-xl font-medium rounded-xl tracking-tighter p-2 sm:p-4" onClick={() => handleDel(item._id)} >Delete</button>
+                            <button className="bg-green-400 text-white text-xl font-medium rounded-xl tracking-tighter p-2 sm:p-4" onClick={() => navigate(`/update/${item._id}`)}>Update</button>
 
                         </div>
                     ))
