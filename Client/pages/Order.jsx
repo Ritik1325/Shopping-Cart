@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from '../utils/axios'
 import { useMessage } from "../context/message";
-import { useLocation } from "react-router";
+import {  useNavigate } from "react-router";
 
 
 
@@ -9,23 +9,11 @@ import { useLocation } from "react-router";
 
 
 const Order = () => {
-    const location = useLocation();
-    const { count } = location.state || {};
     const [loading, setLoading] = useState(true);
-    const [number, setNumber] = useState([]);
-
     const { topUp } = useMessage();
-
     const [order, setOrder] = useState([]);
 
-
-
-    useEffect(() => {
-        if (count) setNumber(prev => [...prev, count]);
-
-    }, [])
-
-
+    const navigate=useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
