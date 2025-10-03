@@ -19,16 +19,16 @@ const App = () => {
   return (
     <>
       <div className="bg-stone-400 shadow-xl flex justify-between  items-center  fixed left-0 right-0 p-6 z-10">
-        <h1 className="font-medium text-4xl text-orange-400">thecart</h1>
+        <h1 className="font-medium text-2xl sm:text-4xl text-orange-400">thecart</h1>
         <div className="flex gap-12">
-          <NavLink className='text-white font-medium text-xl' to={'/'}>Home</NavLink>
-          <NavLink className='text-white font-medium text-xl' to={'/login'}>Login</NavLink>
+          <NavLink className='text-white font-medium sm:text-xl' to={'/'}>Home</NavLink>
+          <NavLink className='text-white font-medium sm:text-xl' to={'/login'}>Login</NavLink>
 
 
         </div>
       </div>
 
-      <div className="min-h-screen  pt-22  w-full">
+      <div className="min-h-screen pt-20 sm:pt-22  w-full">
         <Routes>
 
           <Route path="/login" element={<Login />}></Route>

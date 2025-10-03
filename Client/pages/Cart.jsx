@@ -85,17 +85,17 @@ const Cart = () => {
     return (
         <>
             <button onClick={() => navigate(-1)} className="px-6 py-3 m-4 rounded-xl text-white text-xl font-medium bg-orange-400">Back</button>
-            <div className="h-screen  p-4 flex flex-col gap-16">
+            <div className="h-screen p-2  sm:p-4 flex flex-col gap-16">
                 {cart.length > 0 ? (
                     cart.map(item => (
-                        <div key={item._id} className="flex p-3 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
-                            <img className="w-32 rounded-xl " src={item.product.image.url} alt="image" />
-                            <p className=" text-xl text-medium">{item.product.name}</p>
-                            <p className=" text-xl text-medium">${item.product.price}</p>
+                        <div key={item._id} className="flex py-2 sm:p-3 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
+                            <img className="sm:w-32 w-12 rounded-xl " src={item.product.image.url} alt="image" />
+                            <p className=" sm:text-xl sm:text-medium tracking-tighter">{item.product.name}</p>
+                            <p className=" sm:text-xl sm:text-medium tracking-tighter">${item.product.price}</p>
                             {item.product.discount !== 0 ? <div>{item.product.discount}</div> : null}
-                            <p className=" text-xl text-medium">{item.count}</p>
-                            <button className="bg-red-400 text-white text-xl font-medium rounded-xl p-4" onClick={() => removeItem(item._id)}>Remove</button>
-                            <button className="bg-green-400 text-white text-xl font-medium rounded-xl p-4" onClick={() => placeOrder(item.product._id)}>Place order</button>
+                            <p className=" sm:text-xl sm:text-medium">{item.count}</p>
+                            <button className="bg-red-400 text-white sm:text-xl font-medium tracking-tighter rounded-xl p-2 sm:p-4" onClick={() => removeItem(item._id)}>Remove</button>
+                            <button className="bg-green-400 text-white sm:text-xl font-medium tracking-tighter rounded-xl p-2 sm:p-4" onClick={() => placeOrder(item.product._id)}>Place order</button>
                         </div>
                     ))
 

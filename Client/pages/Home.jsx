@@ -166,8 +166,8 @@ const Home = () => {
 
   return (
     <>
-      <div className="h-screen flex flex-col " style={{ backgroundColor: "beige " }}>
-        {isopen ? <div className="flex flex-col gap-4 items-center fixed p-2 z-10  left-0 top-35 shadow-2xl w-72 bg-stone-300/10 border-r-2">
+      <div className="h-screen flex flex-col overflow-y-auto " style={{ backgroundColor: "beige " }}>
+        {isopen ? <div className="flex flex-col gap-4 items-center fixed p-2 z-10  left-0 top-35 shadow-2xl w-42 sm:w-72 bg-stone-300/10 border-r-2">
           {user?.role==="admin"?<NavLink to={'/create'}>Post Product</NavLink>:null}
           {user?.role==="admin"?<NavLink to={'/myProduct'}>My Product</NavLink>:null}
 
@@ -178,12 +178,12 @@ const Home = () => {
 
         <div className="flex justify-between p-4">
 
-          <Menu onClick={sideMenu} className="w-8 h-8 cursor-pointer" />
+          <Menu onClick={sideMenu} className="sm:w-8 h-8 cursor-pointer" />
 
           <div className="flex  items-center">
             <p className="text-xl font-medium">filter:</p>
-            <select name="filter" className="outline-none" value={filter} onChange={(e) => setFilter(e.target.value)} >
-              <option value="">None</option>
+            <select name="filter" className="outline-none " value={filter} onChange={(e) => setFilter(e.target.value)} >
+              <option  value="">None</option>
               <option value="electronics">Electronics</option>
               <option value="clothes">Clothing</option>
               <option value="furniture">Furniture</option>
@@ -192,7 +192,7 @@ const Home = () => {
           </div>
 
           <div className="flex">
-            <NavLink to={'/cart'}> <ShoppingCart className="w-8 h-8 cursor-pointer" /></NavLink>
+            <NavLink to={'/cart'}> <ShoppingCart className="sm:w-8 h-8 cursor-pointer" /></NavLink>
             {cart.length > 0 ? <h1 className="text-white text-xl h-8 px-2 ml-[-6px] mt-[-6px] bg-blue-500 rounded-2xl">{cart.length}</h1> : null}
           </div>
 
@@ -204,26 +204,26 @@ const Home = () => {
 
 
 
-        <div className={`h-screen flex flex-wrap box-border gap-24 p-4 w-full ${isopen ? "pointer-events-none blur-xs" : "pointer-events-auto blur-none"} `}>
+        <div className={`h-screen flex flex-wrap box-border gap-12 sm:gap-24 p-4 w-full ${isopen ? "pointer-events-none blur-xs" : "pointer-events-auto blur-none"} `}>
           {product.length > 0 && filteredProduct ? (
 
             filteredProduct.map((p, index) => (
-              <div key={p._id} className="max-w-md w-72 h-62 rounded-2xl box-border  flex gap-6 items-center flex-col  shadow-2xl" style={{ backgroundColor: p.bgcolor, color: p.textcolor }}>
+              <div key={p._id} className="max-w-md sm:w-72 h-42 sm:h-62 rounded-2xl box-border  flex gap-4 items-center flex-col  shadow-2xl" style={{ backgroundColor: p.bgcolor, color: p.textcolor }}>
 
-                <img src={p.image.url} alt={p.name} className="object-cover w-58 box-border mt-4 h-42 rounded-xl" />
-                <div className="w-full h-full rounded-b-2xl p-3 flex justify-between" style={{ backgroundColor: p.panelcolor }}>
+                <img src={p.image.url} alt={p.name} className="object-cover sm:w-58 w-38  box-border mt-2 sm:mt-4 h-28 sm:h-42 " />
+                <div className=" h-full w-full rounded-b-xl sm:rounded-b-2xl sm:p-3 p-2 flex justify-between" style={{ backgroundColor: p.panelcolor }}>
                   <div>
-                    <h1 className="text-2xl font-medium">{p.name}</h1>
-                    <h2 className="text-xl ">${p.price}</h2>
+                    <h1 className="sm:text-2xl font-medium">{p.name}</h1>
+                    <h2 className="sm:text-xl ">${p.price}</h2>
 
                   </div>
                   {count[index] === 0 ? (
-                    <button onClick={() => handleCount(p._id, "inc")} className="py-2 cursor-pointer px-4 rounded-md bg-orange-400 text-white text-2xl font-medium">+</button>
+                    <button onClick={() => handleCount(p._id, "inc")} className="sm:py-2 cursor-pointer sm:px-4 px-2 rounded-md bg-orange-400 text-white sm:text-2xl font-medium">+</button>
                   ) : (
-                    <div className="flex w-22 py-2 px-2 rounded-md bg-green-400 cursor-pointer  text-white text-xl font-medium items-center justify-center gap-2">
-                      <button className="text-3xl cursor-pointer font-medium" onClick={() => handleCount(p._id, "dec")}>-</button>
+                    <div className="flex sm:w-22 w-14 py-2 px-2 rounded-md bg-green-400 cursor-pointer  text-white text-xl font-medium items-center justify-center gap-2">
+                      <button className="sm:text-3xl cursor-pointer font-medium" onClick={() => handleCount(p._id, "dec")}>-</button>
                       <p>{count[index]}</p>
-                      <button className="text-3xl cursor-pointer font-medium" onClick={() => handleCount(p._id, "inc")}>+</button>
+                      <button className="sm:text-3xl cursor-pointer font-medium" onClick={() => handleCount(p._id, "inc")}>+</button>
                     </div>
 
                   )}

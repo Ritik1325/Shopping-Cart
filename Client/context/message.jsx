@@ -35,14 +35,14 @@ export const MessageProvider = ({ children }) => {
 
             {message && (
                 <div
-                    className={`fixed top-20 right-8 px-4 py-4 rounded-2xl shadow-lg text-white
-                         font-medium
+                    className={`fixed sm:top-20 top-18 sm:right-8 right-4 px-4 sm:py-4  py-2 rounded-xl sm:rounded-2xl shadow-lg text-white
+                         
             ${type === "success" && "bg-green-500"} 
             ${type === "error" && "bg-red-500"} 
             ${type === "info" && "bg-blue-500"} 
           `}
                 >
-                    <p className="text-xl font-bold font-serif">{message}</p>
+                    <p className="sm:text-xl sm:font-bold font-medium font-serif">{message}</p>
                 </div>
             )}
 
