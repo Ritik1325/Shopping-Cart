@@ -10,6 +10,7 @@ const Account=()=>{
    const navigate=useNavigate();
     return(
         <>
+        <button onClick={()=>navigate(-1)} className="px-6 py-3 m-4 rounded-xl text-white text-xl font-medium bg-orange-400">Back</button>
         <div className="p-4 flex flex-col gap-10 ">
             <div className="flex gap-2 items-center">
                 <p className="text-3xl text-green-400 font-medium">

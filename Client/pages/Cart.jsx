@@ -10,11 +10,11 @@ import { useNavigate } from "react-router";
 
 const Cart = () => {
     const [loading, setLoading] = useState(true);
-    
+
     const { topUp } = useMessage();
 
-    const {cart,setCart}=useCart();
-    const navigate=useNavigate();
+    const { cart, setCart } = useCart();
+    const navigate = useNavigate();
 
 
 
@@ -53,20 +53,20 @@ const Cart = () => {
 
     }
 
-    const placeOrder=async(id)=>{
+    const placeOrder = async (id) => {
         try {
-            const res=await axios.post(`/user/order/${id}`,{},{withCredentials:true});
-            topUp(res.data.message,"success");
-            navigate('/Order',{state:{count:res.data.Count}});
+            const res = await axios.post(`/user/order/${id}`, {}, { withCredentials: true });
+            topUp(res.data.message, "success");
+            navigate('/Order', { state: { count: res.data.Count } });
 
-   
+
         } catch (error) {
-             if (error.response && error.response.data && error.response.data.message) {
+            if (error.response && error.response.data && error.response.data.message) {
                 topUp(error.response.data.message, "error");
             } else {
                 topUp(error.message, "error");
             }
-            
+
         }
     }
 
@@ -84,6 +84,7 @@ const Cart = () => {
 
     return (
         <>
+            <button onClick={() => navigate(-1)} className="px-6 py-3 m-4 rounded-xl text-white text-xl font-medium bg-orange-400">Back</button>
             <div className="h-screen  p-4 flex flex-col gap-16">
                 {cart.length > 0 ? (
                     cart.map(item => (
@@ -94,7 +95,7 @@ const Cart = () => {
                             {item.product.discount !== 0 ? <div>{item.product.discount}</div> : null}
                             <p className=" text-xl text-medium">{item.count}</p>
                             <button className="bg-red-400 text-white text-xl font-medium rounded-xl p-4" onClick={() => removeItem(item._id)}>Remove</button>
-                            <button className="bg-green-400 text-white text-xl font-medium rounded-xl p-4" onClick={()=>placeOrder(item.product._id)}>Place order</button>
+                            <button className="bg-green-400 text-white text-xl font-medium rounded-xl p-4" onClick={() => placeOrder(item.product._id)}>Place order</button>
                         </div>
                     ))
 
@@ -106,7 +107,7 @@ const Cart = () => {
                         <p><span className=" text-blue-400">shipping-charge:</span> ${shippingFee}</p>
                         <p><span className=" text-blue-400">handlingFee: </span> ${handlingCharge}</p>
                         <p><span className=" text-blue-400">Toatal Bill: </span> ${grandtotal}</p>
-                        
+
                     </div>
                 ) : null}
 

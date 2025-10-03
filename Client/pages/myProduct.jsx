@@ -12,7 +12,7 @@ const MyProduct = () => {
     const [loading, setLoading] = useState(true)
 
     const { topUp } = useMessage();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
 
 
@@ -66,6 +66,7 @@ const MyProduct = () => {
 
     return (
         <>
+            <button onClick={() => navigate(-1)} className="px-6 py-3 m-4 rounded-xl text-white text-xl font-medium bg-orange-400">Back</button>
             <div className="h-screen p-4">
                 {products.length > 0 ? (
                     products.map(item => (

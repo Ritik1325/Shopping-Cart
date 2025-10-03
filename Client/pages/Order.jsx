@@ -9,21 +9,21 @@ import { useLocation } from "react-router";
 
 
 const Order = () => {
-    const location=useLocation();
-    const {count}=location.state || {};
+    const location = useLocation();
+    const { count } = location.state || {};
     const [loading, setLoading] = useState(true);
-    const [number,setNumber]=useState([]);
-    
+    const [number, setNumber] = useState([]);
+
     const { topUp } = useMessage();
 
-    const [order,setOrder]=useState([]);
+    const [order, setOrder] = useState([]);
 
 
 
-    useEffect(()=>{
-       if(count) setNumber(prev=>[...prev,count]);
+    useEffect(() => {
+        if (count) setNumber(prev => [...prev, count]);
 
-    },[])
+    }, [])
 
 
 
@@ -62,11 +62,11 @@ const Order = () => {
 
     }
 
-   
+
 
     if (loading) return (<div className="text-3xl text-blue-500 text-center ">Loading...</div>)
 
-    const itemTotal = order.reduce((acc, curr) => acc +(curr.product.price * curr.count), 0);
+    const itemTotal = order.reduce((acc, curr) => acc + (curr.product.price * curr.count), 0);
     const shippingFee = 5;
     const handlingCharge = 2;
     const grandtotal = itemTotal + shippingFee + handlingCharge;
@@ -77,16 +77,17 @@ const Order = () => {
 
     return (
         <>
+            <button onClick={() => navigate(-1)} className="px-6 py-3 m-4 rounded-xl text-white text-xl font-medium bg-orange-400">Back</button>
             <div className="h-screen  p-4 flex flex-col gap-16">
                 {order.length > 0 ? (
-                    order.map((item,index) => (
+                    order.map((item, index) => (
                         <div key={index} className="flex p-3 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
                             <img className="w-32 rounded-xl " src={item.product.image.url} alt="image" />
                             <p className=" text-xl text-medium">{item.product.name}</p>
                             <p className=" text-xl text-medium">${item.product.price}</p>
                             {item.product.discount !== 0 ? <div>{item.product.discount}</div> : null}
                             <p className=" text-xl text-medium">{item.count}</p>
-                            <button className="bg-red-400 text-white text-xl font-medium rounded-xl p-4" onClick={()=>removeItem(item.product._id)} >Cancel order</button>
+                            <button className="bg-red-400 text-white text-xl font-medium rounded-xl p-4" onClick={() => removeItem(item.product._id)} >Cancel order</button>
                         </div>
                     ))
 
@@ -98,7 +99,7 @@ const Order = () => {
                         <p><span className=" text-blue-400">shipping-charge:</span> ${shippingFee}</p>
                         <p><span className=" text-blue-400">handlingFee: </span> ${handlingCharge}</p>
                         <p><span className=" text-blue-400">Toatal Bill: </span> ${grandtotal}</p>
-                       
+
                     </div>
                 ) : null}
 
