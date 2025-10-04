@@ -98,20 +98,20 @@ const UpdateProduct = () => {
 
     return (
         <>
-            <div className="min-h-screen  bg-[url('/public/bgimage.png')] bg-cover bg-center  "  >
-                <div className="relative top-25 ">
-                    <h1 className="text-center text-2xl font-medium ">Update Your Product</h1>
-                    <div className="flex  mx-auto w-[60%]    p-4 ">
-                        <form onSubmit={handleSubmit} className="flex gap-12 flex-wrap">
-                            <input type="text" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
+            <div className="h-screen w-screen  bg-[url('/public/bgimage.png')] bg-cover bg-center flex justify-center items-center px-4  "  >
+                <div className="w-full max-w-3xl bg-white/10 border border-white/20 rounded-2xl shadow-xl p-6">
+                    <h1 className="text-center text-2xl font-semibold mb-6 text-blue-500 ">Update Your Product</h1>
+                    
+                        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <input type="text" className=" w-full text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="name" value={name} onChange={(e) => setName(e.target.value)} />
 
-                            <input type="Number" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="price" value={price} onChange={(e) => setPrice(e.target.value)} />
+                            <input type="Number" className=" w-full text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="price" value={price} onChange={(e) => setPrice(e.target.value)} />
 
-                            <input type="Number" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Discount" value={discount} onChange={(e) => setDiscount(e.target.value)} />
+                            <input type="Number" className=" w-full text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Discount" value={discount} onChange={(e) => setDiscount(e.target.value)} />
 
-                            <input type="file" className=" w-72 h-42 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required name="image" onChange={(e) => setImage(e.target.files[0])} />
+                            <input type="file" className=" w-full text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required name="image" onChange={(e) => setImage(e.target.files[0])} />
 
-                            <select name="category" className="w-72 h-42 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl" required value={category} onChange={(e) => setCategory(e.target.value)}>
+                            <select name="category" className="w-full  text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl" required value={category} onChange={(e) => setCategory(e.target.value)}>
                                 < option value="">Select category</ option >
                                 < option value="electronics">Electronics</ option >
                                 < option value="clothes">Clothing</ option >
@@ -120,22 +120,22 @@ const UpdateProduct = () => {
                                 < option value="home">Home</ option >
                             </select>
 
-                            <div className="flex flex-col gap-8 justify-center items-center ">
-                                <h1 className="text-2xl  ">Color Pallete</h1>
-                                <input type="text" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Bg-color" value={bgcolor} onChange={(e) => setBgcolor(e.target.value)} />
+                            <div className="col-span-1 md:col-span-2 flex flex-col gap-3 ">
+                                <h1 className="text-xl font-semibold text-center mb-2  ">Color Pallete</h1>
+                                <input type="text" className=" w-full text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Bg-color" value={bgcolor} onChange={(e) => setBgcolor(e.target.value)} />
 
-                                <input type="text" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="text-color" value={textcolor} onChange={(e) => setTextcolor(e.target.value)} />
+                                <input type="text" className=" w-full text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="text-color" value={textcolor} onChange={(e) => setTextcolor(e.target.value)} />
 
-                                <input type="text" className=" w-72 text-xl font-medium p-4 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Panel-color" value={panelcolor} onChange={(e) => setPanelcolor(e.target.value)} />
+                                <input type="text" className=" w-full text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required placeholder="Panel-color" value={panelcolor} onChange={(e) => setPanelcolor(e.target.value)} />
 
-                                <button disabled={loading} type="submit" className="p-4 w-92 rounded-xl bg-orange-500 text-white font-semibold text-xl hover:bg-orange-400 ">{loading ? "Updating..." : "Update"}</button>
+                                <button disabled={loading} type="submit" className="p-3 w- rfullounded-xl bg-orange-500 text-white font-semibold text-xl hover:bg-orange-400 disabled:opacity-50 ">{loading ? "Updating..." : "Update"}</button>
                             </div>
 
 
 
                         </form>
 
-                    </div>
+                    
                 </div>
             </div>
 
