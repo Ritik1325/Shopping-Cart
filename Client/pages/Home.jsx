@@ -170,7 +170,7 @@ const Home = () => {
           {user?.role === "admin" ? <NavLink to={'/create'}>Post Product</NavLink> : null}
           {user?.role === "admin" ? <NavLink to={'/myProduct'}>My Product</NavLink> : null}
 
-          {user ? <button className="w-72" onClick={Logout}>Logout</button> : null}
+          {user ? <button className="w-72" onClick={()=>Logout()  }>Logout</button> : null}
           {user ? <NavLink to={'/Account'}>Account</NavLink> : null}
 
         </div> : null}

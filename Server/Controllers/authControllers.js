@@ -75,7 +75,7 @@ export const logoutUser = async (req, res) => {
     try {
 
         res.cookie('token',)
-        if(req.cookies.token !== "undefined") return res.status(403).json({message:"Something wrong ,Try again"})
+        res.clearCookie();
         return res.status(200).json({ message: "Logged Out",user:null });
 
     } catch (error) {
