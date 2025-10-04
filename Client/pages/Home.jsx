@@ -14,7 +14,7 @@ import { useCart } from "../context/cart"
 
 
 const Home = () => {
-  const { user,setUser } = useUser();
+  const { user, setUser } = useUser();
   const { cart, setCart } = useCart();
 
   const [product, setProduct] = useState([]);
@@ -24,8 +24,9 @@ const Home = () => {
   const [count, setCount] = useState([])
   const [isopen, setIsopen] = useState(false);
   const [filter, setFilter] = useState('');
+  const [search, setSearch] =useState('');
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
 
 
@@ -38,7 +39,7 @@ const Home = () => {
     const fetchData = async () => {
       try {
 
-        const res = await axios.get('/product', { withCredentials: true });
+        const res = await axios.get(`/product?filter=${filter}&search=${search}`, { withCredentials: true });
         setProduct(res.data.Products);
 
         setCount(new Array(res.data.Products.length).fill(0));
@@ -61,7 +62,7 @@ const Home = () => {
 
     fetchData();
 
-  }, []);
+  }, [filter,search]);
 
 
   useEffect(() => {
@@ -136,10 +137,10 @@ const Home = () => {
   const Logout = async () => {
     try {
 
-      const res=await axios.post('/auth/logout', {}, { withCredentials: true });
+      const res = await axios.post('/auth/logout', {}, { withCredentials: true });
       setUser(res.data.user);
       navigate(0);
-      
+
       topUp(res.data.message, "success");
     } catch (error) {
       if (error.response && error.response.data && error.response.data.message) {
@@ -154,9 +155,7 @@ const Home = () => {
 
   if (loading) return <p className="pt-28 text-center text-3xl font-bold text-blue-500">Loading...</p>
 
-  const filteredProduct = filter
-    ? product.filter(item => item.category === filter)
-    : product;
+ 
 
 
 
@@ -168,28 +167,36 @@ const Home = () => {
     <>
       <div className="h-screen flex flex-col overflow-y-auto " style={{ backgroundColor: "beige " }}>
         {isopen ? <div className="flex flex-col gap-4 items-center fixed p-2 z-10  left-0 top-35 shadow-2xl w-42 sm:w-72 bg-stone-300/10 border-r-2">
-          {user?.role==="admin"?<NavLink to={'/create'}>Post Product</NavLink>:null}
-          {user?.role==="admin"?<NavLink to={'/myProduct'}>My Product</NavLink>:null}
+          {user?.role === "admin" ? <NavLink to={'/create'}>Post Product</NavLink> : null}
+          {user?.role === "admin" ? <NavLink to={'/myProduct'}>My Product</NavLink> : null}
 
           {user ? <button className="w-72" onClick={Logout}>Logout</button> : null}
-          {user ? <NavLink to={'/Account'}>Account</NavLink>:null}
+          {user ? <NavLink to={'/Account'}>Account</NavLink> : null}
 
         </div> : null}
 
-        <div className="flex justify-between p-4">
+        <div className="flex justify-between px-2 py-1">
 
           <Menu onClick={sideMenu} className="sm:w-8 h-8 cursor-pointer" />
 
           <div className="flex  items-center">
-            <p className="text-xl font-medium">filter:</p>
+            <p className="text-sm sm:text-xl font-medium">filter:</p>
             <select name="filter" className="outline-none " value={filter} onChange={(e) => setFilter(e.target.value)} >
-              <option  value="">None</option>
-              <option value="electronics">Electronics</option>
-              <option value="clothes">Clothing</option>
-              <option value="furniture">Furniture</option>
-              <option value="accessories">Accessories</option>
+              <option className="text-sm" value="">None</option>
+              <option className="text-sm" value="electronics">Electronics</option>
+              <option className="text-sm" value="clothes">Clothing</option>
+              <option className="text-sm" value="furniture">Furniture</option>
+              <option className="text-sm" value="accessories">Accessories</option>
             </select>
           </div>
+
+          <input
+            type="text"
+            placeholder="Search products..."
+            className="border rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-blue-400 w-[200px] md:w-[300px]"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
           <div className="flex">
             <NavLink to={'/cart'}> <ShoppingCart className="sm:w-8 h-8 cursor-pointer" /></NavLink>
@@ -205,9 +212,9 @@ const Home = () => {
 
 
         <div className={`h-screen flex flex-wrap box-border justify-center gap-12 md:gap-12 sm:gap-24 p-4 w-full ${isopen ? "pointer-events-none blur-xs" : "pointer-events-auto blur-none"} `}>
-          {product.length > 0 && filteredProduct ? (
+          {product.length > 0 && product ? (
 
-            filteredProduct.map((p, index) => (
+            product.map((p, index) => (
               <div key={p._id} className="max-w-md sm:w-72 h-42 sm:h-62 rounded-2xl box-border  flex gap-4 items-center flex-col  shadow-2xl" style={{ backgroundColor: p.bgcolor, color: p.textcolor }}>
 
                 <img src={p.image.url} alt={p.name} className="object-cover sm:w-58 w-38  box-border mt-2 sm:mt-4 h-28 sm:h-42 " />
@@ -235,7 +242,7 @@ const Home = () => {
 
               </div>
             ))
-          ) : filteredProduct.length === 0 ? (<div className="flex text-3xl text-amber-300 text-center">No products yet..</div>) : (
+          ) : product.length === 0 ? (<div className="flex text-3xl text-amber-300 text-center">No products yet..</div>) : (
             <div className="flex text-3xl text-amber-300 text-center">No products yet..</div>
           )}
 

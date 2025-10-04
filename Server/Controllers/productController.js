@@ -11,11 +11,11 @@ export const createProduct = async (req, res) => {
         const { name, price, category, discount, bgcolor, panelcolor, textcolor } = req.body;
         const user = await User.findOne(req.user._id);
 
-        if (!user) return res.status(401).json({ message: "Login first" });
+        if (!user) return res.status(401).json({ message: "Login first" })
 
 
 
-        if (!req.file) return res.status(400).json({ message: "Image required" });
+        if (!req.file) return res.status(400).json({ message: "Image required" })
 
         const newProduct = await Product.create({
             name,
@@ -50,7 +50,19 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
     try {
-        const products = await Product.find();
+        const {filter,search}=req.query;
+        const query={};
+
+        if(filter){
+            query.category=filter;
+        }
+
+        if(search){
+            query.name={$regex:search,$options:'i'}
+        }
+
+
+        const products = await Product.find(query).sort({createdAt:-1});
 
         if (!products) return res.status(404).json({ message: "Error fetching products" });
 
