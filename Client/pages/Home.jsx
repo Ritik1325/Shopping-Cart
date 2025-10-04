@@ -204,7 +204,7 @@ const Home = () => {
 
 
 
-        <div className={`h-screen flex flex-wrap box-border gap-12 sm:gap-24 p-4 w-full ${isopen ? "pointer-events-none blur-xs" : "pointer-events-auto blur-none"} `}>
+        <div className={`h-screen flex flex-wrap box-border justify-center gap-12 md:gap-12 sm:gap-24 p-4 w-full ${isopen ? "pointer-events-none blur-xs" : "pointer-events-auto blur-none"} `}>
           {product.length > 0 && filteredProduct ? (
 
             filteredProduct.map((p, index) => (
