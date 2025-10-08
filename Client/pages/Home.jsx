@@ -169,9 +169,10 @@ const Home = () => {
         {isopen ? <div className="flex flex-col gap-4 items-center fixed p-2 z-10  left-0 top-35 shadow-2xl w-42 sm:w-72 bg-stone-300/10 border-r-2">
           {user?.role === "admin" ? <NavLink to={'/create'}>Post Product</NavLink> : null}
           {user?.role === "admin" ? <NavLink to={'/myProduct'}>My Product</NavLink> : null}
-
-          {user ? <button className="w-72" onClick={()=>Logout()  }>Logout</button> : null}
+          {user?.role === "customer" ? <NavLink to={'/cart'}>My Cart</NavLink> : null}
+          {user?.role === "customer" ? <NavLink to={'/Order'}>My Orders</NavLink> : null}
           {user ? <NavLink to={'/Account'}>Account</NavLink> : null}
+          {user ? <button className="w-72" onClick={()=>Logout()  }>Logout</button> : null}
 
         </div> : null}
 
