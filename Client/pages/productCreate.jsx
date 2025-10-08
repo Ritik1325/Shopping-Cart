@@ -79,12 +79,12 @@ const ProductCreate = () => {
                             <input type="file" className=" w-full text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl " required name="image" onChange={(e) => setImage(e.target.files[0])} />
 
                             <select name="category" className="w-full  text-xl font-medium p-3 border-2 border-amber-300 rounded-2xl outline-none focus:border-2 focus:border-blue-400 focus:shadow-2xl" required value={category} onChange={(e) => setCategory(e.target.value)}>
-                                < option  value="">Select category</ option >
-                                < option  value="electronics">Electronics</ option >
-                                < option  value="clothes">Clothing</ option >
-                                < option  value="furniture">Furniture</ option >
-                                < option  value="accessories">Accessories</ option >
-                                < option  value="home">Home</ option >
+                                < option className="text-sm"  value="">Select category</ option >
+                                < option className="text-sm" value="electronics">Electronics</ option >
+                                < option className="text-sm"  value="clothes">Clothing</ option >
+                                < option className="text-sm"  value="furniture">Furniture</ option >
+                                < option className="text-sm"  value="accessories">Accessories</ option >
+                                < option className="text-sm"  value="home">Home</ option >
                             </select>
 
                             <div className="col-span-1 md:col-span-2 flex flex-col gap-4 ">
