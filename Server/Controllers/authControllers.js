@@ -12,7 +12,7 @@ export const registerUser = async (req, res) => {
 
         const userExist = await User.findOne({ email });
 
-        if (userExist) return res.status(403).json({message:"Already Registered"});
+        if (userExist) return res.status(403).json({ message: "Already Registered" });
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -23,19 +23,26 @@ export const registerUser = async (req, res) => {
             role
         })
 
+        const isProduction = process.env.NODE_ENV === "production";
+
         const token = jwt.sign({ email, id: user._id }, process.env.SECRET_KEY, { expiresIn: '7d' })
-        res.cookie('token', token);
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
 
 
-        return res.status(200).json({ user: user,message:"Registered Successfully" });
+        return res.status(200).json({ user: user, message: "Registered Successfully" });
 
 
 
 
     } catch (error) {
         console.log(error.message);
-        return res.status(500).json({message:error.message});
+        return res.status(500).json({ message: error.message });
 
 
     }
@@ -54,8 +61,15 @@ export const loginUser = async (req, res) => {
 
         if (!pass) return res.status(401).json({ message: "invalid email or password" })
 
+        const isProduction = process.env.NODE_ENV === "production";
+
         const token = jwt.sign({ email, id: user._id }, process.env.SECRET_KEY, { expiresIn: '7d' })
-        res.cookie('token', token);
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
 
 
 
@@ -76,7 +90,7 @@ export const logoutUser = async (req, res) => {
 
         res.cookie('token',)
         res.clearCookie();
-        return res.status(200).json({ message: "Logged Out",user:null });
+        return res.status(200).json({ message: "Logged Out", user: null });
 
     } catch (error) {
         console.log(error.message);
