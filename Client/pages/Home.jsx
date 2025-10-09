@@ -172,7 +172,7 @@ const Home = () => {
           {user?.role === "customer" ? <NavLink  className='text-blue-400 font-medium' to={'/cart'}> Cart</NavLink> : null}
           {user?.role === "customer" ? <NavLink  className='text-blue-400 font-medium' to={'/Order'}>My Orders</NavLink> : null}
           {user ? <NavLink  className='text-blue-400 font-medium' to={'/Account'}>Account</NavLink> : null}
-          {user ? <button className="w-full text-red-400 font-medium" onClick={()=>Logout()  }>Logout</button> : null}
+          {user ? <button className="w-full text-red-400 font-medium cursor-pointer" onClick={()=>Logout()  }>Logout</button> : null}
 
         </div> : null}
 
