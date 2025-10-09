@@ -8,7 +8,7 @@
     "start": "node index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ritik Kumar Singh",
   "license": "ISC",
   "description": "",
   "dependencies": {
