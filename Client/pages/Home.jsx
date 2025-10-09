@@ -24,7 +24,7 @@ const Home = () => {
   const [count, setCount] = useState([])
   const [isopen, setIsopen] = useState(false);
   const [filter, setFilter] = useState('');
-  const [search, setSearch] =useState('');
+  const [search, setSearch] = useState('');
 
   const navigate = useNavigate();
 
@@ -62,7 +62,7 @@ const Home = () => {
 
     fetchData();
 
-  }, [filter,search]);
+  }, [filter, search]);
 
 
   useEffect(() => {
@@ -155,7 +155,7 @@ const Home = () => {
 
   if (loading) return <p className="pt-28 text-center text-3xl font-bold text-blue-500">Loading...</p>
 
- 
+
 
 
 
@@ -168,11 +168,12 @@ const Home = () => {
       <div className="h-screen flex flex-col overflow-y-auto " style={{ backgroundColor: "beige " }}>
         {isopen ? <div className="flex flex-col gap-4 items-center fixed p-2 z-10  left-0 top-35 shadow-2xl w-42 sm:w-72 bg-stone-300/10 border-r-2 rounded-r-xl">
           {user?.role === "admin" ? <NavLink className='text-blue-400 font-medium' to={'/create'}>Post Product</NavLink> : null}
-          {user?.role === "admin" ? <NavLink  className='text-blue-400 font-medium' to={'/myProduct'}>My Product</NavLink> : null}
-          {user?.role === "customer" ? <NavLink  className='text-blue-400 font-medium' to={'/cart'}> Cart</NavLink> : null}
-          {user?.role === "customer" ? <NavLink  className='text-blue-400 font-medium' to={'/Order'}>My Orders</NavLink> : null}
-          {user ? <NavLink  className='text-blue-400 font-medium' to={'/Account'}>Account</NavLink> : null}
-          {user ? <button className="w-full text-red-400 font-medium cursor-pointer" onClick={()=>Logout()  }>Logout</button> : null}
+          {user?.role === "admin" ? <NavLink className='text-blue-400 font-medium' to={'/myProduct'}>My Product</NavLink> : null}
+          {user?.role === "customer" ? <NavLink className='text-blue-400 font-medium' to={'/cart'}> Cart</NavLink> : null}
+          {user?.role === "customer" ? <NavLink className='text-blue-400 font-medium' to={'/Order'}>My Orders</NavLink> : null}
+          {user ? <NavLink className='text-blue-400 font-medium' to={'/Account'}>Account</NavLink> : null}
+          {user ? <button className="w-full text-red-400 font-medium cursor-pointer" onClick={() => Logout()}>Logout</button> : null}
+          {!user ? <p className="text-red-400 font-semibold">No user yet</p> : null}
 
         </div> : null}
 
@@ -223,6 +224,7 @@ const Home = () => {
                   <div>
                     <h1 className="sm:text-2xl font-medium">{p.name}</h1>
                     <h2 className="sm:text-xl ">${p.price}</h2>
+                    {p.discount !== 0 ? <h2 className="sm:text-xl ">{p.discount}% off</h2> : null}
 
                   </div>
                   {count[index] === 0 ? (

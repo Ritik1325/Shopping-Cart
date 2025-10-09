@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from '../utils/axios'
 import { useMessage } from "../context/message";
-import {  useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 
 
@@ -13,7 +13,7 @@ const Order = () => {
     const { topUp } = useMessage();
     const [order, setOrder] = useState([]);
 
-    const navigate=useNavigate()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -54,7 +54,9 @@ const Order = () => {
 
     if (loading) return (<div className="text-3xl text-blue-500 text-center ">Loading...</div>)
 
-    const itemTotal = order.reduce((acc, curr) => acc + (curr.product.price * curr.count), 0);
+    const itemTotal = order.reduce((acc, curr) => acc + (curr.product.discount !== 0 ?
+        ((curr.product.price) - (curr.product.discount / 100) * (curr.product.price))
+        * (curr.count) : (curr.product.price) * curr.count), 0);
     const shippingFee = 5;
     const handlingCharge = 2;
     const grandtotal = itemTotal + shippingFee + handlingCharge;
@@ -72,8 +74,9 @@ const Order = () => {
                         <div key={index} className="flex sm:p-3 py-2 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
                             <img className="sm:w-32 w-16 rounded-xl " src={item.product.image.url} alt="image" />
                             <p className=" sm:text-xl text-medium tracking-tighter">{item.product.name}</p>
-                            <p className=" sm:text-xl text-medium tracking-tighter">${item.product.price}</p>
-                            {item.product.discount !== 0 ? <div>{item.product.discount}</div> : null}
+                            <p className=" sm:text-xl text-medium tracking-tighter">${item.product.discount !== 0 ?
+                                (item.product.price) - (item.product.discount / 100) * (item.product.price)
+                                : item.product.price}</p>
                             <p className=" sm:text-xl text-medium tracking-tighter">{item.count}</p>
                             <button className="bg-red-400 text-white sm:text-xl font-medium rounded-xl p-2 sm:p-4 tracking-tighter" onClick={() => removeItem(item.product._id)} >Cancel order</button>
                         </div>

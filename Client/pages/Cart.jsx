@@ -73,7 +73,9 @@ const Cart = () => {
 
     if (loading) return (<div className="text-3xl text-blue-500 text-center ">Loading...</div>)
 
-    const itemTotal = cart.reduce((acc, curr) => acc + (curr.product.price * curr.count), 0);
+    const itemTotal = cart.reduce((acc, curr) => acc + (curr.product.discount !== 0 ?
+        ((curr.product.price) - (curr.product.discount / 100) * (curr.product.price))
+        * (curr.count) : (curr.product.price) * curr.count), 0);
     const shippingFee = 5;
     const handlingCharge = 2;
     const grandtotal = itemTotal + shippingFee + handlingCharge;
@@ -91,8 +93,9 @@ const Cart = () => {
                         <div key={item._id} className="flex py-2 sm:p-3 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
                             <img className="sm:w-32 w-12 rounded-xl " src={item.product.image.url} alt="image" />
                             <p className=" sm:text-xl sm:text-medium tracking-tighter">{item.product.name}</p>
-                            <p className=" sm:text-xl sm:text-medium tracking-tighter">${item.product.price}</p>
-                            {item.product.discount !== 0 ? <div>{item.product.discount}</div> : null}
+                            <p className=" sm:text-xl sm:text-medium tracking-tighter">${item.product.discount !== 0 ?
+                                (item.product.price) - (item.product.discount / 100) * (item.product.price)
+                                : item.product.price}</p>
                             <p className=" sm:text-xl sm:text-medium">{item.count}</p>
                             <button className="bg-red-400 text-white sm:text-xl font-medium tracking-tighter rounded-xl p-2 sm:p-4" onClick={() => removeItem(item._id)}>Remove</button>
                             <button className="bg-green-400 text-white sm:text-xl font-medium tracking-tighter rounded-xl p-2 sm:p-4" onClick={() => placeOrder(item.product._id)}>Place order</button>
