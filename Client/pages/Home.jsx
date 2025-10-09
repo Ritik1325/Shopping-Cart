@@ -166,13 +166,13 @@ const Home = () => {
   return (
     <>
       <div className="h-screen flex flex-col overflow-y-auto " style={{ backgroundColor: "beige " }}>
-        {isopen ? <div className="flex flex-col gap-4 items-center fixed p-2 z-10  left-0 top-35 shadow-2xl w-42 sm:w-72 bg-stone-300/10 border-r-2">
-          {user?.role === "admin" ? <NavLink to={'/create'}>Post Product</NavLink> : null}
-          {user?.role === "admin" ? <NavLink to={'/myProduct'}>My Product</NavLink> : null}
-          {user?.role === "customer" ? <NavLink to={'/cart'}>My Cart</NavLink> : null}
-          {user?.role === "customer" ? <NavLink to={'/Order'}>My Orders</NavLink> : null}
-          {user ? <NavLink to={'/Account'}>Account</NavLink> : null}
-          {user ? <button className="w-72" onClick={()=>Logout()  }>Logout</button> : null}
+        {isopen ? <div className="flex flex-col gap-4 items-center fixed p-2 z-10  left-0 top-35 shadow-2xl w-42 sm:w-72 bg-stone-300/10 border-r-2 rounded-r-xl">
+          {user?.role === "admin" ? <NavLink className='text-blue-400 font-medium' to={'/create'}>Post Product</NavLink> : null}
+          {user?.role === "admin" ? <NavLink  className='text-blue-400 font-medium' to={'/myProduct'}>My Product</NavLink> : null}
+          {user?.role === "customer" ? <NavLink  className='text-blue-400 font-medium' to={'/cart'}> Cart</NavLink> : null}
+          {user?.role === "customer" ? <NavLink  className='text-blue-400 font-medium' to={'/Order'}>My Orders</NavLink> : null}
+          {user ? <NavLink  className='text-blue-400 font-medium' to={'/Account'}>Account</NavLink> : null}
+          {user ? <button className="w-full text-red-400 font-medium" onClick={()=>Logout()  }>Logout</button> : null}
 
         </div> : null}
 
