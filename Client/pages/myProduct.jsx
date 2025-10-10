@@ -74,7 +74,7 @@ const MyProduct = () => {
                             <img className="sm:w-32 w-12 sm:rounded-xl " src={item.image.url} alt="image" />
                             <p className=" sm:text-xl text-medium tracking-tighter">{item.name}</p>
                             <p className=" sm:text-xl text-medium tracking-tighter">${item.price}</p>
-                            {item.discount !== 0 ? <div>{item.discount}</div> : null}
+                            {item.discount !== 0 ? <div>{item.discount}%</div> : null}
 
                             <button className="bg-red-400 text-white text-xl font-medium rounded-xl tracking-tighter p-2 sm:p-4" onClick={() => handleDel(item._id)} >Delete</button>
                             <button className="bg-green-400 text-white text-xl font-medium rounded-xl tracking-tighter p-2 sm:p-4" onClick={() => navigate(`/update/${item._id}`)}>Update</button>

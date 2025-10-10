@@ -71,7 +71,7 @@ const Order = () => {
             <div className="h-screen p-2  sm:p-4 flex flex-col gap-16">
                 {order.length > 0 ? (
                     order.map((item, index) => (
-                        <div key={index} className="flex sm:p-3 py-2 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
+                        <div key={index} className="flex flex-wrap sm:p-3 py-2 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
                             <img className="sm:w-32 w-16 rounded-xl " src={item.product.image.url} alt="image" />
                             <p className=" sm:text-xl text-medium tracking-tighter">{item.product.name}</p>
                             <p className=" sm:text-xl text-medium tracking-tighter">${item.product.discount !== 0 ?
