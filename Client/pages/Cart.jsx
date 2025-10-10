@@ -87,7 +87,7 @@ const Cart = () => {
     return (
         <>
             <button onClick={() => navigate(-1)} className="px-6 py-3 m-4 rounded-xl text-white text-xl font-medium bg-orange-400">Back</button>
-            <div className="h-screen p-2  sm:p-4 flex flex-col gap-16">
+            <div className="h-screen p-2  sm:p-4 flex flex-col gap-16 flex-wrap items-center">
                 {cart.length > 0 ? (
                     cart.map(item => (
                         <div key={item._id} className="flex py-2 sm:p-3 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
@@ -109,7 +109,7 @@ const Cart = () => {
                     <div className=" p-4 flex flex-col gap-4 text-2xl text-medium border-2 rounded-xl  w-72 ">
                         <p><span className=" text-blue-400">shipping-charge:</span> ${shippingFee}</p>
                         <p><span className=" text-blue-400">handlingFee: </span> ${handlingCharge}</p>
-                        <p><span className=" text-blue-400">Toatal Bill: </span> ${grandtotal}</p>
+                        <p><span className=" text-blue-400">Total Bill: </span> ${grandtotal}</p>
 
                     </div>
                 ) : null}
