@@ -195,7 +195,7 @@ const Home = () => {
           <input
             type="text"
             placeholder="Search products..."
-            className="border rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-blue-400 w-[200px] md:w-[300px]"
+            className="border rounded-lg px-2 py-1 outline-none focus:ring-2 focus:ring-blue-400 w-[150px] md:w-[300px]"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -217,7 +217,7 @@ const Home = () => {
           {product.length > 0 && product ? (
 
             product.map((p, index) => (
-              <div key={p._id} className="max-w-md sm:w-72 h-42 sm:h-62 rounded-2xl box-border  flex gap-4 items-center flex-col  shadow-2xl" style={{ backgroundColor: p.bgcolor, color: p.textcolor }}>
+              <div key={p._id} className="max-w-md sm:w-72 w-[35%] h-42 sm:h-62 rounded-2xl box-border  flex gap-4 items-center flex-col  shadow-2xl" style={{ backgroundColor: p.bgcolor, color: p.textcolor }}>
 
                 <img src={p.image.url} alt={p.name} className="object-cover sm:w-58 w-38  box-border mt-2 sm:mt-4 h-28 sm:h-42 " />
                 <div className=" h-full w-full rounded-b-xl sm:rounded-b-2xl sm:p-3 p-2 flex justify-between" style={{ backgroundColor: p.panelcolor }}>

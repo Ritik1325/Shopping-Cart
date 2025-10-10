@@ -17,7 +17,7 @@ const isLoggedIn=async (req,res,next)=>{
 
         
     } catch (error) {
-        return res.status(500).json({message:"Login first"});
+        return res.status(500).json({message:"Token Issue"});
 
         
     }
