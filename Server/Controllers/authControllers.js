@@ -23,13 +23,13 @@ export const registerUser = async (req, res) => {
             role
         })
 
-        const isProduction = process.env.NODE_ENV === "production";
+      
 
         const token = jwt.sign({ email, id: user._id }, process.env.SECRET_KEY, { expiresIn: '7d' })
         res.cookie('token', token, {
             httpOnly: true,
-            secure: isProduction,
-            sameSite: isProduction ? "none" : "lax",
+            secure: true,
+            sameSite: "None",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
@@ -61,13 +61,13 @@ export const loginUser = async (req, res) => {
 
         if (!pass) return res.status(401).json({ message: "invalid email or password" })
 
-        const isProduction = process.env.NODE_ENV === "production";
+
 
         const token = jwt.sign({ email, id: user._id }, process.env.SECRET_KEY, { expiresIn: '7d' })
         res.cookie('token', token, {
             httpOnly: true,
-            secure: isProduction,
-            sameSite: isProduction ? "none" : "lax",
+            secure: true,
+            sameSite: "None",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
 
@@ -87,17 +87,10 @@ export const loginUser = async (req, res) => {
 
 export const logoutUser = async (req, res) => {
     try {
-        const isProduction=process.env.NODE_ENV==='production';
-
-        res.cookie('token', {
+        res.clearCookie('token', {
             httpOnly: true,
-            secure: isProduction,
-            sameSite: isProduction ? "none" : "lax",
-        })
-        res.clearCookie('token',{
-             httpOnly: true,
-            secure: isProduction,
-            sameSite: isProduction ? "none" : "lax",
+            secure: true,
+            sameSite: "None",
         });
         return res.status(200).json({ message: "Logged Out", user: null });
 

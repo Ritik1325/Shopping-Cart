@@ -202,7 +202,7 @@ const Home = () => {
 
           <div className="flex">
             <NavLink to={'/cart'}> <ShoppingCart className="sm:w-8 h-8 cursor-pointer" /></NavLink>
-            {cart.length > 0 ? <h1 className="text-white text-xl h-8 px-2 ml-[-6px] mt-[-6px] bg-blue-500 rounded-2xl">{cart.length}</h1> : null}
+            {cart.length > 0 ? <h1 className="text-white sm:text-xl text:sm h-8 px-2 ml-[-6px] mt-[-6px] bg-blue-500 rounded-2xl">{cart.length}</h1> : null}
           </div>
 
 

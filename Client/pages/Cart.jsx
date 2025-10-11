@@ -91,7 +91,7 @@ const Cart = () => {
                 {cart.length > 0 ? (
                     cart.map(item => (
                         <div key={item._id} className="flex flex-wrap py-2 sm:p-3 border-2 border-amber-400 rounded-2xl justify-evenly items-center">
-                            <img className="sm:w-32 w-12 rounded-xl " src={item.product.image.url} alt="image" />
+                            <img className="sm:w-32 w-10 rounded-xl " src={item.product.image.url} alt="image" />
                             <p className=" sm:text-xl sm:text-medium tracking-tighter">{item.product.name}</p>
                             <p className=" sm:text-xl sm:text-medium tracking-tighter">${item.product.discount !== 0 ?
                                 (item.product.price) - (item.product.discount / 100) * (item.product.price)
