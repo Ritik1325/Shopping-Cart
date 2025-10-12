@@ -50,19 +50,19 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
     try {
-        const {filter,search}=req.query;
-        const query={};
+        const { filter, search } = req.query;
+        const query = {};
 
-        if(filter){
-            query.category=filter;
+        if (filter) {
+            query.category = filter;
         }
 
-        if(search){
-            query.name={$regex:search,$options:'i'}
+        if (search) {
+            query.name = { $regex: search, $options: 'i' }
         }
 
 
-        const products = await Product.find(query).sort({createdAt:-1});
+        const products = await Product.find(query).sort({ createdAt: -1 });
 
         if (!products) return res.status(404).json({ message: "Error fetching products" });
 
@@ -97,6 +97,23 @@ export const myProducts = async (req, res) => {
 export const removeProduct = async (req, res) => {
     try {
         const { id } = req.params;
+        const user = await User.findById(req.user.id || req.user._id);
+
+        const Inorder = user.orders.find(item => item.product._id.toString() === id);
+        const matchedCart = user.cart.find(item => item.product._id.toString() === id);
+
+        if (Inorder) {
+            user.orders = user.orders.filter(item => item.product._id.toString() !== id);
+            await user.save()
+        }
+
+        if (matchedCart) {
+            user.cart = user.cart.filter(item => item.product._id.toString() !== id);
+            await user.save()
+
+        }
+
+
         await Product.findByIdAndDelete(id);
 
         return res.status(200).json({ message: "Deleted" });

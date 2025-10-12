@@ -86,13 +86,15 @@ const Order = () => {
                 ) : (<h1 className="text-3xl text-gray-500 font-medium">No items</h1>)}
 
                 {order.length > 0 ? (
-                    <div className=" p-4 flex flex-col gap-4 text-2xl text-medium border-2 rounded-xl  w-72 ">
+                    <div className=" p-4 flex flex-col gap-4 text-xl text-medium border-2 rounded-xl  w-72 ">
                         <p><span className=" text-blue-400">shipping-charge:</span> ${shippingFee}</p>
                         <p><span className=" text-blue-400">handlingFee: </span> ${handlingCharge}</p>
                         <p><span className=" text-blue-400">Total Bill: </span> ${grandtotal}</p>
 
                     </div>
                 ) : null}
+
+                {order.length>0?<h1 className="text-xl text-green-400 font-semibold flex p-2 mt-2 text-center ">Your Order Arriving Soon!</h1>:null}
 
 
 
