@@ -101,15 +101,10 @@ export const removeProduct = async (req, res) => {
         if (!user) return res.status(404).json({ message: "User not Found" });
 
         const product = await Product.findById(id);
-        if (!product) return res.status(404).json({ message: "Product not found" });
+        if (!product) return re.status(404).json({ message: "Product not found" });
 
-        user.orders = user.orders.filter(
-            (item) => item.product._id.toString() !== id
-        );
-
-        user.cart = user.cart.filter(
-            (item) => item.product._id.toString() !== id
-        );
+        user.products = user.products.filter(item=>item._id.toString()!==id);
+       
 
         await user.save();
 
