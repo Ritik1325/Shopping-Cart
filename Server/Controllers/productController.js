@@ -98,23 +98,24 @@ export const removeProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await User.findById(req.user.id || req.user._id);
+        if (!user) return res.status(404).json({ message: "User not Found" });
 
-        const Inorder = user.orders.find(item => item.product._id.toString() === id);
-        const matchedCart = user.cart.find(item => item.product._id.toString() === id);
+        const product = await Product.findById(id);
+        if (!product) return res.status(404).json({ message: "Product not found" });
 
-        if (Inorder) {
-            user.orders = user.orders.filter(item => item.product._id.toString() !== id);
-            await user.save()
-        }
+        user.orders = user.orders.filter(
+            (item) => item.product._id.toString() !== id
+        );
 
-        if (matchedCart) {
-            user.cart = user.cart.filter(item => item.product._id.toString() !== id);
-            await user.save()
+        user.cart = user.cart.filter(
+            (item) => item.product._id.toString() !== id
+        );
 
-        }
+        await user.save();
 
 
         await Product.findByIdAndDelete(id);
+
 
         return res.status(200).json({ message: "Deleted" });
     } catch (error) {
