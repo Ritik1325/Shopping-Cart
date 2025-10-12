@@ -43,6 +43,8 @@ export const getCart = async (req, res) => {
 
         if (!user) return res.status(402).json({ message: "User Not found" });
 
+        user.cart = user.cart.filter(item => item.product !== null);
+
         const populatedUser = await User.findById(user._id).populate('cart.product', 'name price image discount');
 
 
@@ -105,10 +107,10 @@ export const Order = async (req, res) => {
         const existingOrder = user.orders.some(item => item.product._id.toString() === id);
 
         if (existingOrder) return res.status(402).json({ message: "Already Ordered!" });
-        const matchedCart=user.cart.find(item=>item.product._id.toString()===id);
-        const Count=matchedCart.count;
+        const matchedCart = user.cart.find(item => item.product._id.toString() === id);
+        const Count = matchedCart.count;
 
-        user.orders.push({product:id,count:Count});
+        user.orders.push({ product: id, count: Count });
         await user.save();
 
         const populatedUser = await User.findById(user._id).populate('orders.product', 'name price image discount');
@@ -128,6 +130,10 @@ export const getOrders = async (req, res) => {
         const user = await User.findById(req.user?._id || req.user?.id);
 
         if (!user) return res.status(404).json({ message: "User not found" });
+
+      
+        user.orders = user.orders.filter(item => item.product !== null);
+
 
         const populatedUser = await User.findById(user._id).populate('orders.product', 'name price image discount');
         return res.status(200).json({ Orders: populatedUser.orders });

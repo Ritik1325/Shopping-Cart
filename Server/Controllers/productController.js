@@ -97,19 +97,23 @@ export const myProducts = async (req, res) => {
 export const removeProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = await User.findById(req.user.id || req.user._id);
-        if (!user) return res.status(404).json({ message: "User not Found" });
 
         const product = await Product.findById(id);
         if (!product) return re.status(404).json({ message: "Product not found" });
 
-        user.products = user.products.filter(item=>item._id.toString()!==id);
-       
-
-        await user.save();
-
 
         await Product.findByIdAndDelete(id);
+
+        await User.updateMany(
+            {},
+            {
+                $pull: {
+                    cart: { product: id },
+                    orders: { product: id },
+                    products: id,
+                },
+            }
+        );
 
 
         return res.status(200).json({ message: "Deleted" });
