@@ -75,7 +75,7 @@ export const verifyOtp = async (req, res) => {
 
         if (user.otpExpiry < Date.now()) return res.status(400).json({ message: "OTP expired" });
 
-      
+
         user.otp = null;
         user.otpExpiry = null;
         await user.save();
@@ -113,11 +113,20 @@ export const loginUser = async (req, res) => {
 
         if (!pass) return res.status(401).json({ message: "invalid email or password" })
 
+        await transporter.sendMail({
+            from: `"The Cart" <no-reply@myapp.com>`,
+            to: email,
+            subject: "Your OTP Code",
+            html: `<h2>Verify your email</h2>
+             <p>Your OTP code is <b>${otp}</b>. It will expire in 5 minutes.</p>`,
+
+        })
 
 
-    
 
-        return res.status(200).json({  message:  "OTP sent to your email. Please verify." });
+
+
+        return res.status(200).json({ message: "OTP sent to your email. Please verify." });
 
 
 
