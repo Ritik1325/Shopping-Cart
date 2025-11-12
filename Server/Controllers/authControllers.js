@@ -107,11 +107,15 @@ export const loginUser = async (req, res) => {
 
         const user = await User.findOne({ email });
 
+
         if (!user) return res.status(401).json({ message: "invalid email or password" });
 
         const pass = await bcrypt.compare(password, user.password);
 
         if (!pass) return res.status(401).json({ message: "invalid email or password" })
+
+        user.otp= Math.floor(100000 + Math.random() * 900000).toString();
+        user.otpExpiry=new Date(Date.now() + 5 * 60 * 1000);
 
         await transporter.sendMail({
             from: `"The Cart" <no-reply@myapp.com>`,
