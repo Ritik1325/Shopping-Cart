@@ -116,6 +116,7 @@ export const loginUser = async (req, res) => {
 
         user.otp= Math.floor(100000 + Math.random() * 900000).toString();
         user.otpExpiry=new Date(Date.now() + 5 * 60 * 1000);
+        await user.save();
 
         await transporter.sendMail({
             from: `"The Cart" <no-reply@myapp.com>`,
