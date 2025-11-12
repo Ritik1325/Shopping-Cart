@@ -12,6 +12,8 @@ const Register = () => {
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
     const [role, setRole] = useState('customer')
+    const [step,setStep]=useState(1);
+    const [otp,setOtp]=useState('')
 
     const {setUser}=useUser()
 
@@ -24,11 +26,11 @@ const Register = () => {
             e.preventDefault();
 
            const res= await axios.post('/auth/register',{name,email,role,password},{withCredentials:true});
-           setUser(res.data.user);
+           setStep(2);
 
 
            topUp(res.data.message,"success");
-           navigate('/');
+          
 
 
 
@@ -42,6 +44,33 @@ const Register = () => {
         }
     }
 
+    const handleOtp=async(e)=>{
+        try {
+            e.preventDefault();
+
+           const res= await axios.post('/auth/verifyOtp',{email,otp},{withCredentials:true});
+           setUser(res.data.user)
+
+
+           topUp(res.data.message,"success");
+           setStep(1);
+           navigate('/');
+
+
+
+        } catch (error) {
+             if (error.response && error.response.data && error.response.data.message) {
+                topUp(error.response.data.message, "error");
+            } else {
+                topUp(error.message, "error");
+            }
+            
+        }
+
+    }
+
+
+
 
     return (
         <>
@@ -50,7 +79,8 @@ const Register = () => {
                     <h1 className=" text-center  text-3xl mb-6 font-medium  tracking-wide ">Register</h1>
 
 
-                    <form onSubmit={handleSubmit}>
+                    {step===1 &&(
+                        <form onSubmit={handleSubmit}>
                         <input type="text" className="bg-transparent w-full px-4 py-2 border-b-2 outline-none font-medium text-xl mb-8  focus:border-sky-400 focus:border-b-4" placeholder="Fullname" required value={name} onChange={(e)=>setName(e.target.value)} />
 
                         <input className="bg-transparent w-full px-4 py-2 border-b-2 outline-none font-medium text-xl mb-8  focus:border-sky-400 focus:border-b-4" type="email" placeholder="E-mail" required value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -67,9 +97,18 @@ const Register = () => {
 
                         <div className="flex justify-center flex-col items-center">
                             <p className="font-medium p-2">Already registered? <NavLink to={'/login'} className="text-blue-400" >login</NavLink></p>
-                            <button type="submit" className="p-4 w-full rounded-xl bg-orange-500 text-white font-semibold text-xl hover:bg-orange-400 ">Register</button>
+                            <button type="submit" className="p-4 w-full rounded-xl bg-orange-500 text-white font-semibold text-xl hover:bg-orange-400 ">Get OTP</button>
                         </div>
                     </form>
+                    )}
+
+
+                    {step===2 && (
+                        <form onSubmit={handleOtp}>
+                            <input className="bg-transparent w-full px-4 py-2 border-b-2 outline-none font-medium text-xl mb-8  focus:border-sky-400 focus:border-b-4" required type="text" value={otp} placeholder="Enter OTP" onChange={(e)=>setOtp(e.target.value)}/>
+                             <button type="submit" className="p-4 w-full rounded-xl bg-orange-500 text-white font-semibold text-xl hover:bg-orange-400 ">Register</button>
+                        </form>
+                    )}
 
                 </div>
 
