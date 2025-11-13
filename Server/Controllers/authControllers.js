@@ -119,11 +119,11 @@ export const loginUser = async (req, res) => {
         await user.save();
 
         await transporter.sendMail({
-            from: `"The Cart" <no-reply@myapp.com>`,
+            from: `"The Cart" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Your OTP Code",
             html: `<h2>Verify your email</h2>
-             <p>Your OTP code is <b>${user.otp}</b>. It will expire in 5 minutes.</p>`,
+             <p>Your OTP code is <b>${otp}</b>. It will expire in 5 minutes.</p>`,
 
         })
 
