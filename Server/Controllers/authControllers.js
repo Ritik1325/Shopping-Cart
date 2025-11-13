@@ -38,7 +38,7 @@ export const registerUser = async (req, res) => {
 
 
         await transporter.sendMail({
-            from: `"The Cart" <no-reply@myapp.com>`,
+            from: `"The Cart" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Your OTP Code",
             html: `<h2>Verify your email</h2>
