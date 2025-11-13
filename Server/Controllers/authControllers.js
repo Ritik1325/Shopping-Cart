@@ -26,6 +26,11 @@ export const registerUser = async (req, res) => {
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
 
+        transporter.verify((err, success) => {
+            if (err) console.error("Error:", err);
+            else console.log("Server is ready to take messages");
+        });
+
 
         const user = await User.create({
             name,
