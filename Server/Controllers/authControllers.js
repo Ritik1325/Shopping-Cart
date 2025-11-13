@@ -114,8 +114,9 @@ export const loginUser = async (req, res) => {
 
         if (!pass) return res.status(401).json({ message: "invalid email or password" })
 
-        user.otp= Math.floor(100000 + Math.random() * 900000).toString();
-        user.otpExpiry=new Date(Date.now() + 5 * 60 * 1000);
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        user.otp = otp;
+        user.otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
         await user.save();
 
         await transporter.sendMail({
@@ -123,7 +124,7 @@ export const loginUser = async (req, res) => {
             to: email,
             subject: "Your OTP Code",
             html: `<h2>Verify your email</h2>
-             <p>Your OTP code is <b>${otp}</b>. It will expire in 5 minutes.</p>`,
+             <p>Your OTP code is <b>${user.otp}</b>. It will expire in 5 minutes.</p>`,
 
         })
 
