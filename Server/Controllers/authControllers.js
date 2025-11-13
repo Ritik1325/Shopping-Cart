@@ -5,7 +5,8 @@ import nodemailer from 'nodemailer'
 
 
 const transporter = nodemailer.createTransport({
-    service:"gmail",
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -25,8 +26,6 @@ export const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
-
-       
 
 
         const user = await User.create({
