@@ -48,13 +48,13 @@ app.use("/product", productRoutes)
 
 
 
-
+const PORT=process.env.PORT || 8000;
 
 
 const Server = async () => {
     try {
         await connect();
-        app.listen(process.env.PORT, () => {
+        app.listen(PORT,"0.0.0.0", () => {
             console.log('Listening to the port', process.env.PORT);
            
 
