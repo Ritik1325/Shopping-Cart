@@ -49,7 +49,7 @@ export const registerUser = async (req, res) => {
 
 
 
-        return res.status(200).json({ message: "OTP sent to your email. Please verify." });
+        return res.status(200).json({otp, message: "OTP sent to your email. Please verify." });
 
 
 
@@ -132,7 +132,7 @@ export const loginUser = async (req, res) => {
 
 
 
-        return res.status(200).json({ message: "OTP sent to your email. Please verify." });
+        return res.status(200).json({otp, message: "OTP sent to your email. Please verify." });
 
 
 

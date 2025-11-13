@@ -29,7 +29,7 @@ const Register = () => {
            setStep(2);
 
 
-           topUp(res.data.message,"success");
+           topUp(res.data.otp,"success");
           
 
 
