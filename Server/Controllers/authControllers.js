@@ -39,7 +39,7 @@ export const registerUser = async (req, res) => {
 
 
         await transporter.sendMail({
-            from: `"The Cart" <${process.env.EMAIL_USER}>`,
+            from: `"The Cart" <no-reply@myapp.com>`,
             to: email,
             subject: "Your OTP Code",
             html: `<h2>Verify your email</h2>
@@ -120,7 +120,7 @@ export const loginUser = async (req, res) => {
         await user.save();
 
         await transporter.sendMail({
-            from: `"The Cart" <${process.env.EMAIL_USER}>`,
+            from: `"The Cart" <no-reply@myapp.com>`,
             to: email,
             subject: "Your OTP Code",
             html: `<h2>Verify your email</h2>

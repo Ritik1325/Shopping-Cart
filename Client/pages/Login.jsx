@@ -32,7 +32,7 @@ const Login = () => {
             const res = await axios.post('/auth/login', { email, password }, { withCredentials: true });
             setStep(2)
 
-            topUp(res.data.otp, "success");
+            topUp(`Your OTP is ${otp}` , "success");
 
 
 
