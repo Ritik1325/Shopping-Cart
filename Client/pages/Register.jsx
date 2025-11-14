@@ -29,7 +29,7 @@ const Register = () => {
            setStep(2);
 
 
-           topUp(`Your OTP is ${res.data.otp}`,"success");
+           topUp(res.data.message,"success");
           
 
 

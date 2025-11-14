@@ -1,17 +1,8 @@
 import jwt from 'jsonwebtoken'
 import User from "../models/Usermodel.js";
 import bcrypt from 'bcrypt'
-import nodemailer from 'nodemailer'
-
-
-const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-})
+import { Resend } from "resend";
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 
@@ -38,18 +29,19 @@ export const registerUser = async (req, res) => {
         })
 
 
-        await transporter.sendMail({
-            from: `"The Cart" <no-reply@myapp.com>`,
+        await resend.emails.send({
+            from: process.env.EMAIL_FROM,
             to: email,
             subject: "Your OTP Code",
-            html: `<h2>Verify your email</h2>
-             <p>Your OTP code is <b>${otp}</b>. It will expire in 5 minutes.</p>`,
+            html: `
+             <h2>Your Verification Code</h2>
+               <p>Your OTP is <b>${otp}</b></p>
+              <p>This OTP expires in 5 minutes.</p> `
+        });
 
-        })
 
 
-
-        return res.status(200).json({otp, message: "OTP sent to your email. Please verify." });
+        return res.status(200).json({ message: "OTP sent to your email. Please verify." });
 
 
 
@@ -119,20 +111,21 @@ export const loginUser = async (req, res) => {
         user.otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
         await user.save();
 
-        await transporter.sendMail({
-            from: `"The Cart" <no-reply@myapp.com>`,
+        await resend.emails.send({
+            from: process.env.EMAIL_FROM,
             to: email,
             subject: "Your OTP Code",
-            html: `<h2>Verify your email</h2>
-             <p>Your OTP code is <b>${otp}</b>. It will expire in 5 minutes.</p>`,
-
-        })
-
-
-
+            html: `
+                      <h2>Your Verification Code</h2>
+                      <p>Your OTP is <b>${otp}</b></p>
+                     <p>This OTP expires in 5 minutes.</p> `
+        });
 
 
-        return res.status(200).json({otp, message: "OTP sent to your email. Please verify." });
+
+
+
+        return res.status(200).json({  message: "OTP sent to your email. Please verify." });
 
 
 
