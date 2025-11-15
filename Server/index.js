@@ -19,17 +19,28 @@ const app = express();
 
 
 
-
-
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://shopping-cart-frontend-1.onrender.com"
+];
 
 app.use(cors({
-    origin: [
-      "http://localhost:5173",
-      "https://shopping-cart-frontend-1.onrender.com"
-    ],
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        }
+        return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
-}))
+}));
+
+
+app.options("*", cors());
+
+
+
 
 
 
