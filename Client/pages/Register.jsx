@@ -72,18 +72,10 @@ const Register = () => {
     const resendOTP = async (e) => {
             try {
                 e.preventDefault();
-                if (user) {
-                    topUp('Logout First', 'error');
-                    return;
-                }
-                const res = await axios.post('/auth/login', { email, password }, { withCredentials: true });
-                setStep(2)
+                const res = await axios.post('/auth/resendOtp', { email }, { withCredentials: true });
+                
     
                 topUp(res.data.message || `Your OTP is ${res.data.otp }`, "success");
-    
-    
-    
-    
     
             } catch (error) {
                 if (error.response && error.response.data && error.response.data.message) {

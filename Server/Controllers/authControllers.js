@@ -136,7 +136,7 @@ export const loginUser = async (req, res) => {
 
 
 
-        return res.status(200).json({otp });
+        return res.status(200).json({ otp });
 
 
 
@@ -146,6 +146,44 @@ export const loginUser = async (req, res) => {
 
     }
 }
+
+
+export const resendRegisterOtp = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user) return res.status(400).json({ message: "User not found" });
+
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+
+        user.otp = otp;
+        user.otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
+        await user.save();
+
+
+        if (email === "ritikrajput2550@gmail.com") {
+            await resend.emails.send({
+                from: process.env.EMAIL_FROM,
+                to: email,
+                subject: "Your OTP Code",
+                html: `
+                      <h2>Your Verification Code</h2>
+                      <p>Your OTP is <b>${otp}</b></p>
+                     <p>This OTP expires in 5 minutes.</p> `
+            });
+
+            return res.status(200).json({ message: "OTP sent to your email. Please verify." });
+
+        }
+
+        return res.status(200).json({ otp });
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
 
 
 export const logoutUser = async (req, res) => {
