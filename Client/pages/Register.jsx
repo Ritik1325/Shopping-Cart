@@ -69,6 +69,33 @@ const Register = () => {
 
     }
 
+    const resendOTP = async (e) => {
+            try {
+                e.preventDefault();
+                if (user) {
+                    topUp('Logout First', 'error');
+                    return;
+                }
+                const res = await axios.post('/auth/login', { email, password }, { withCredentials: true });
+                setStep(2)
+    
+                topUp(res.data.message || `Your OTP is ${res.data.otp }`, "success");
+    
+    
+    
+    
+    
+            } catch (error) {
+                if (error.response && error.response.data && error.response.data.message) {
+                    topUp(error.response.data.message, "error");
+                } else {
+                    topUp(error.message, "error");
+                }
+    
+    
+            }
+        }
+
 
 
 
@@ -107,6 +134,7 @@ const Register = () => {
                         <form onSubmit={handleOtp}>
                             <input className="bg-transparent w-full px-4 py-2 border-b-2 outline-none font-medium text-xl mb-8  focus:border-sky-400 focus:border-b-4" required type="text" value={otp} placeholder="Enter OTP" onChange={(e)=>setOtp(e.target.value)}/>
                              <button type="submit" className="p-4 w-full rounded-xl bg-orange-500 text-white font-semibold text-xl hover:bg-orange-400 ">Register</button>
+                             <h2 className="mt-2 font-semibold text-blue-400 " onClick={resendOTP} >Resend OTP</h2>
                         </form>
                     )}
 
