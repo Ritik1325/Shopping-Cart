@@ -108,7 +108,7 @@ const Login = () => {
                         <form onSubmit={handleOtp}>
                             <input className="bg-transparent w-full px-4 py-2 border-b-2 outline-none font-medium text-xl mb-8  focus:border-sky-400 focus:border-b-4" required type="text" value={otp} placeholder="Enter OTP" onChange={(e) => setOtp(e.target.value)} />
                             <button type="submit" className="p-4 w-full rounded-xl bg-orange-500 text-white font-semibold text-xl hover:bg-orange-400 ">Login</button>
-                            <h2 className="mt-2 font-semibold text-blue-400 " onClick={handleSubmit} >Resend OTP</h2>
+                            <h2 className="cursor-pointer mt-2 font-semibold text-blue-400 " onClick={handleSubmit} >Resend OTP</h2>
                         </form>
                     )}
 
