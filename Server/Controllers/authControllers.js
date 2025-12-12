@@ -2,12 +2,13 @@ import jwt from 'jsonwebtoken'
 import User from "../models/Usermodel.js";
 import bcrypt from 'bcrypt'
 import { Resend } from "resend";
-const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 
 
 export const registerUser = async (req, res) => {
     try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { name, email, password, role } = req.body;
 
         const userExist = await User.findOne({ email });
@@ -101,6 +102,7 @@ export const verifyOtp = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
@@ -150,6 +152,7 @@ export const loginUser = async (req, res) => {
 
 export const resendRegisterOtp = async (req, res) => {
     try {
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { email } = req.body;
 
         const user = await User.findOne({ email });

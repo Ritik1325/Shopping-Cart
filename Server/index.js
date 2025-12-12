@@ -1,7 +1,14 @@
+
+import dotenv from "dotenv";
+dotenv.config();
+
+
+
+
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
+
 import connect from './config/Connect.js';
 import authRoutes from './routes/authRoutes.js'
 import productRoutes from './routes/productRoutes.js'
@@ -9,7 +16,7 @@ import userRoutes from './routes/userRoutes.js'
 
 
 
-dotenv.config();
+
 
 
 
@@ -24,8 +31,8 @@ const app = express();
 
 app.use(cors({
     origin: [
-      "http://localhost:5173",
-      "https://shopping-cart-frontend-1.onrender.com"
+        "http://localhost:5173",
+        "https://shopping-cart-frontend-1.onrender.com"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -48,15 +55,15 @@ app.use("/product", productRoutes)
 
 
 
-const PORT=process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
 
 const Server = async () => {
     try {
         await connect();
-        app.listen(PORT,"0.0.0.0", () => {
+        app.listen(PORT, "0.0.0.0", () => {
             console.log('Listening to the port', process.env.PORT);
-           
+
 
 
         })
