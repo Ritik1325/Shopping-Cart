@@ -30,25 +30,18 @@ export const registerUser = async (req, res) => {
         })
 
 
-        if (email === "ritikrajput2550@gmail.com") {
-            await resend.emails.send({
+        await resend.emails.send({
                 from: process.env.EMAIL_FROM,
                 to: email,
                 subject: "Your OTP Code",
                 html: `
-             <h2>Your Verification Code</h2>
-               <p>Your OTP is <b>${otp}</b></p>
-              <p>This OTP expires in 5 minutes.</p> `
+                      <h2>Your Verification Code</h2>
+                      <p>Your OTP is <b>${otp}</b></p>
+                     <p>This OTP expires in 5 minutes.</p> `
             });
 
             return res.status(200).json({ message: "OTP sent to your email. Please verify." });
 
-
-        }
-
-
-
-        return res.status(200).json({ otp });
 
 
 
@@ -119,7 +112,7 @@ export const loginUser = async (req, res) => {
         user.otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
         await user.save();
 
-        if (email === "ritikrajput2550@gmail.com") {
+       
             await resend.emails.send({
                 from: process.env.EMAIL_FROM,
                 to: email,
@@ -132,14 +125,13 @@ export const loginUser = async (req, res) => {
 
             return res.status(200).json({ message: "OTP sent to your email. Please verify." });
 
-        }
+       
 
 
 
 
 
-        return res.status(200).json({ otp });
-
+       
 
 
     } catch (error) {
@@ -165,8 +157,7 @@ export const resendRegisterOtp = async (req, res) => {
         await user.save();
 
 
-        if (email === "ritikrajput2550@gmail.com") {
-            await resend.emails.send({
+        await resend.emails.send({
                 from: process.env.EMAIL_FROM,
                 to: email,
                 subject: "Your OTP Code",
@@ -178,9 +169,6 @@ export const resendRegisterOtp = async (req, res) => {
 
             return res.status(200).json({ message: "OTP sent to your email. Please verify." });
 
-        }
-
-        return res.status(200).json({ otp });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });
