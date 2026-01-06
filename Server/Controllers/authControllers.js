@@ -1,14 +1,35 @@
 import jwt from 'jsonwebtoken'
 import User from "../models/Usermodel.js";
 import bcrypt from 'bcrypt'
-import { Resend } from "resend";
+
+import nodemailer from "nodemailer"
+
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false, 
+  auth: {
+    user: process.env.BREVO_USER,
+    pass: process.env.BREVO_PASS,
+  },
+});
+
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("❌ Brevo SMTP error:", error);
+  } else {
+    console.log("✅ Brevo SMTP ready");
+  }
+});
+
 
 
 
 
 export const registerUser = async (req, res) => {
     try {
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        
         const { name, email, password, role } = req.body;
 
         const userExist = await User.findOne({ email });
@@ -20,7 +41,7 @@ export const registerUser = async (req, res) => {
         const otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
 
 
-        const user = await User.create({
+         await User.create({
             name,
             password: hashedPassword,
             email,
@@ -30,8 +51,8 @@ export const registerUser = async (req, res) => {
         })
 
 
-        await resend.emails.send({
-                from: process.env.EMAIL_FROM,
+        await transporter.sendMail({
+                from: process.env.BREVO_EMAIL_FROM,
                 to: email,
                 subject: "Your OTP Code",
                 html: `
@@ -95,7 +116,7 @@ export const verifyOtp = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     try {
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
@@ -113,8 +134,8 @@ export const loginUser = async (req, res) => {
         await user.save();
 
        
-            await resend.emails.send({
-                from: process.env.EMAIL_FROM,
+            await transporter.sendMail({
+                from: process.env.BREVO_EMAIL_FROM,
                 to: email,
                 subject: "Your OTP Code",
                 html: `
@@ -144,7 +165,7 @@ export const loginUser = async (req, res) => {
 
 export const resendRegisterOtp = async (req, res) => {
     try {
-        const resend = new Resend(process.env.RESEND_API_KEY);
+      
         const { email } = req.body;
 
         const user = await User.findOne({ email });
@@ -157,8 +178,8 @@ export const resendRegisterOtp = async (req, res) => {
         await user.save();
 
 
-        await resend.emails.send({
-                from: process.env.EMAIL_FROM,
+        await transporter.sendMail({
+                from: process.env.BREVO_EMAIL_FROM,
                 to: email,
                 subject: "Your OTP Code",
                 html: `
