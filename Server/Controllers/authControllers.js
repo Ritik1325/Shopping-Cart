@@ -1,7 +1,11 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+
 import jwt from 'jsonwebtoken'
 import User from "../models/Usermodel.js";
 import bcrypt from 'bcrypt'
-import { Resend } from "resend";
+
 import nodemailer from "nodemailer"
 
 const transporter = nodemailer.createTransport({
