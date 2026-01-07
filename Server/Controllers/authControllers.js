@@ -1,36 +1,14 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-
 import jwt from 'jsonwebtoken'
 import User from "../models/Usermodel.js";
 import bcrypt from 'bcrypt'
-
-import nodemailer from "nodemailer"
-
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-    },
-});
-
-
-transporter.verify((err, success) => {
-    if (err) {
-        console.error("❌ Email error:", err);
-    } else {
-        console.log("✅ Gmail SMTP ready");
-    }
-});
+import { Resend } from "resend";
 
 
 
 
 export const registerUser = async (req, res) => {
     try {
-
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { name, email, password, role } = req.body;
 
         const userExist = await User.findOne({ email });
@@ -52,25 +30,25 @@ export const registerUser = async (req, res) => {
         })
 
 
-
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: "Your OTP Code",
-            html: `
+        if (email === "ritikrajput2550@gmail.com") {
+            await resend.emails.send({
+                from: process.env.EMAIL_FROM,
+                to: email,
+                subject: "Your OTP Code",
+                html: `
              <h2>Your Verification Code</h2>
                <p>Your OTP is <b>${otp}</b></p>
               <p>This OTP expires in 5 minutes.</p> `
-        });
+            });
 
-        return res.status(200).json({ message: "OTP sent to your email. Please verify." });
-
-
+            return res.status(200).json({ message: "OTP sent to your email. Please verify." });
 
 
+        }
 
 
 
+        return res.status(200).json({ otp });
 
 
 
@@ -124,7 +102,7 @@ export const verifyOtp = async (req, res) => {
 
 export const loginUser = async (req, res) => {
     try {
-        
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { email, password } = req.body;
 
         const user = await User.findOne({ email });
@@ -141,17 +119,26 @@ export const loginUser = async (req, res) => {
         user.otpExpiry = new Date(Date.now() + 5 * 60 * 1000);
         await user.save();
 
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: email,
-            subject: "Your OTP Code",
-            html: `
-             <h2>Your Verification Code</h2>
-               <p>Your OTP is <b>${otp}</b></p>
-              <p>This OTP expires in 5 minutes.</p> `
-        });
+        if (email === "ritikrajput2550@gmail.com") {
+            await resend.emails.send({
+                from: process.env.EMAIL_FROM,
+                to: email,
+                subject: "Your OTP Code",
+                html: `
+                      <h2>Your Verification Code</h2>
+                      <p>Your OTP is <b>${otp}</b></p>
+                     <p>This OTP expires in 5 minutes.</p> `
+            });
 
-        return res.status(200).json({ message: "OTP sent to your email. Please verify." });
+            return res.status(200).json({ message: "OTP sent to your email. Please verify." });
+
+        }
+
+
+
+
+
+        return res.status(200).json({ otp });
 
 
 
@@ -165,7 +152,7 @@ export const loginUser = async (req, res) => {
 
 export const resendRegisterOtp = async (req, res) => {
     try {
-      
+        const resend = new Resend(process.env.RESEND_API_KEY);
         const { email } = req.body;
 
         const user = await User.findOne({ email });
@@ -178,18 +165,22 @@ export const resendRegisterOtp = async (req, res) => {
         await user.save();
 
 
-        await transporter.sendMail({
-                from: process.env.EMAIL_USER,
+        if (email === "ritikrajput2550@gmail.com") {
+            await resend.emails.send({
+                from: process.env.EMAIL_FROM,
                 to: email,
                 subject: "Your OTP Code",
                 html: `
-             <h2>Your Verification Code</h2>
-               <p>Your OTP is <b>${otp}</b></p>
-              <p>This OTP expires in 5 minutes.</p> `
+                      <h2>Your Verification Code</h2>
+                      <p>Your OTP is <b>${otp}</b></p>
+                     <p>This OTP expires in 5 minutes.</p> `
             });
 
             return res.status(200).json({ message: "OTP sent to your email. Please verify." });
 
+        }
+
+        return res.status(200).json({ otp });
 
     } catch (error) {
         return res.status(500).json({ message: error.message });
